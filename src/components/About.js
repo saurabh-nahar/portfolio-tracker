@@ -1,5 +1,9 @@
+import GitCard from "./GitCard";
+import GitCard2 from "./GitCard2";
+
 const About = () => {
     return (
+        <>
         <div className="flex-wrap items-center justify-center px-[25vw] py-[10vw]">
             <h1 className="mb-10">About Us</h1>
             <div>
@@ -14,6 +18,9 @@ const About = () => {
             <p>Embark on your crypto journey with CoinTrack today and unlock the full potential of cryptocurrency markets. Together, we'll navigate the highs and lows, seize opportunities, and shape a brighter future driven by blockchain innovation. Welcome to CoinTrack, where the future of finance begins.</p>
             </div>
         </div>
+        <GitCard/>
+        <GitCard2/>
+        </>
     );
 }
 

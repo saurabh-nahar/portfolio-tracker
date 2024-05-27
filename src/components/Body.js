@@ -1,44 +1,55 @@
-import React, { useEffect, useState } from "react";
-import { API_LINK } from "../utils/constants";
+import React, { useEffect, useState} from "react";
+import useCoinData from "../utils/useCoinData";
 
 const Body = ()=> {
-    const [coinData, setCoinData] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await fetch(API_LINK + process.env.COINMARKETCAP_KEY);
-                const json = await data.json();
-                setCoinData(json);
-                console.log(json); 
-            } catch (e) {
-                console.log(e);
-            }
-        };
-        fetchData();
-    }, []);
+  const coinData = useCoinData();
 
-    return coinData === null ? (<h1>Rendering</h1>) : (
+    return coinData === null ? (
+      <h1>Rendering</h1>
+    ) : (
+      <>
         <div className="px-5">
-            <table className="text-black">
+          <table className="table-auto w-full">
             <thead>
-            <tr>
-                <th>Rank</th>
-                <th>Name</th>
-                <th>Price</th>
-            </tr>
+              <tr>
+                <th className="px-4 py-2">Rank</th>
+                <th className="px-4 py-2">Name</th>
+                <th className="px-4 py-2">% Change 1h</th>
+                <th className="px-4 py-2">% Change 24h</th>
+                <th className="px-4 py-2">% Change 7d</th>
+                <th className="px-4 py-2">Price</th>
+              </tr>
             </thead>
             <tbody>
-                {coinData.data.map((coin)=> {
-                    return (<tr key={coin.id}>
-                    <td>{coin.cmc_rank}</td> 
-                    <td>{coin.symbol}</td>
-                    <td>{coin.quote.USD.price.toFixed(2)}</td>
-                </tr>)
-                })}
+              {coinData.data.map((coin, index) => (
+                <tr
+                  key={coin.id}
+                  className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}
+                >
+                  <td className="px-4 py-2 text-center">{coin.cmc_rank}</td>
+                  <td className="px-4 py-2 text-center">{coin.symbol}</td>
+                  <td className="px-4 py-2 text-center">
+                    {coin.quote.USD.percent_change_1h >= 0 ? "🟢" : "🔴"}{" "}
+                    {Math.abs(coin.quote.USD.percent_change_1h).toFixed(2)}%
+                  </td>
+                  <td className="px-4 py-2 text-center">
+                    {coin.quote.USD.percent_change_24h >= 0 ? "🟢" : "🔴"}{" "}
+                    {Math.abs(coin.quote.USD.percent_change_24h).toFixed(2)}%
+                  </td>
+                  <td className="px-4 py-2 text-center">
+                    {coin.quote.USD.percent_change_7d >= 0 ? "🟢" : "🔴"}{" "}
+                    {Math.abs(coin.quote.USD.percent_change_7d).toFixed(2)}%
+                  </td>
+                  <td className="px-4 py-2 text-center">
+                    ${coin.quote.USD.price.toFixed(2)}
+                  </td>
+                </tr>
+              ))}
             </tbody>
-        </table>
+          </table>
         </div>
+      </>
     );
 }
 
