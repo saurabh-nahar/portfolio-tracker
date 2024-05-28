@@ -6,5 +6,9 @@
     background-color: bisque;
     font-family: 'Green Screen', sans-serif;
 }
+.dark {
+    background-color: black;
+    color: white; 
+  }
 
   

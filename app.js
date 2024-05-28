@@ -9,13 +9,14 @@ import Error from "./src/components/Error";
 import Portfolio from "./src/components/Portfolio";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import NightModeContext from "./src/utils/NightModeContext";
+import Subscription from "./src/components/Subscription";
 
 const Portfolio = lazy(()=> import('./src/components/Portfolio'));
 
 const App = () =>{
     const [switchNightMode, setSwitchNightMode] = useState(false);
     return(
-        <div>
+        <div className="dark:bg-black">
         <NightModeContext.Provider value={{ nightMode: switchNightMode, setSwitchNightMode}}>
         <Header />
         <Outlet/>
@@ -37,6 +38,9 @@ const router = createBrowserRouter([
             },
             {   path: "/contact",
                 element: <Contact/>
+            },
+            {   path: "/subscription",
+                element: <Subscription/>
             },
             {   path: "/portfolio",
                 element: <Suspense fallback = {"Loading!!"}><Portfolio/></Suspense>

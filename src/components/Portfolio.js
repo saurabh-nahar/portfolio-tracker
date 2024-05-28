@@ -52,13 +52,13 @@ const Portfolio = () => {
     }
 
   return coinData == null? <h3>Loading...</h3> : (
-    <>
-    <div className="flex justify-center items-center">
-    <h1 className='text-3xl font-bold'>Add to Portfolio</h1>
+    <div className='dark:bg-black'>
+    <div className="flex justify-center items-center dark:bg-black dark:text-white">
+    <h1 className='text-3xl font-bold dark:bg-black'>Add to Portfolio</h1>
     </div>
-<div className="flex justify-center items-center">
-    <label className="m-2">Select Coin:</label>
-    <select className="m-5" onChange={handlePrice}>
+<div className="flex justify-center items-center dark:bg-black dark:text-white">
+    <label className="m-2 dark:bg-black">Select Coin:</label>
+    <select className="m-5 dark:bg-black" onChange={handlePrice}>
         <option>Options</option>
         {coinData.data.map((coin) => {
             return (
@@ -68,39 +68,41 @@ const Portfolio = () => {
             );
         })}
     </select>
-    <label className="">Input Qty:</label>
-    <input value={qtyValue} className="m-5 border-orange-300 w-12" onChange={(e) => setVal(e)} />
-    <span className="m-2">{qtyValue * price}</span>
-    <button onClick={() => addToPortfolio()} className="bg-orange-400 hover:bg-black hover:text-orange-400  text-white font-bold py-2 px-4 rounded">
+    <label className="dark:bg-black">Input Qty:</label>
+    <input value={qtyValue} className="m-5 border-orange-300 w-12 dark:bg-black" onChange={(e) => setVal(e)} />
+    <span className="m-2 dark:bg-black">{qtyValue * price}</span>
+    <button onClick={() => addToPortfolio()} className="bg-orange-400 hover:bg-black hover:text-orange-400  text-white font-bold py-2 px-4 rounded dark:hover:bg-white">
   Add
 </button>
 
 </div>
+<div className='dark:bg-black'>
     <br/>
     <br/>
     <br/>
-    <table className="table-auto w-full">
+    </div>
+    <table className="table-auto w-full dark:bg-black dark:text-white">
   <thead>
     <tr>
-      <th className="px-4 py-2">Symbol</th>
-      <th className="px-4 py-2">Mkt Price</th>
-      <th className="px-4 py-2">Holding Qty</th>
-      <th className="px-4 py-2">Total</th>
+      <th className="px-4 py-2 dark:bg-black">Symbol</th>
+      <th className="px-4 py-2 dark:bg-black">Mkt Price</th>
+      <th className="px-4 py-2 dark:bg-black">Holding Qty</th>
+      <th className="px-4 py-2 dark:bg-black">Total</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody className='dark:bg-black dark:text-white'>
     {pfArr.map((pfc, index) => (
       <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
-        <td className="px-4 py-2 text-center">{pfc[0].symbol}</td>
-        <td className="px-4 py-2 text-center">${parseFloat(pfc[0].mktPrice).toFixed(2)}</td>
-        <td className="px-4 py-2 text-center">{pfc[0].holdingQty}</td>
-        <td className="px-4 py-2 text-center">${parseFloat(pfc[0].coinTotal).toFixed(2)}</td>
+        <td className="px-4 py-2 text-center dark:bg-black">{pfc[0].symbol}</td>
+        <td className="px-4 py-2 text-center dark:bg-black">${parseFloat(pfc[0].mktPrice).toFixed(2)}</td>
+        <td className="px-4 py-2 text-center dark:bg-black">{pfc[0].holdingQty}</td>
+        <td className="px-4 py-2 text-center dark:bg-black">${parseFloat(pfc[0].coinTotal).toFixed(2)}</td>
       </tr>
     ))}
   </tbody>
 </table>
 
-    </>
+    </div>
   )
 }
 
