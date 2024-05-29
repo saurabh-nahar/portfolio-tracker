@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import useGasPrice from "../utils/useGasPrice";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import NightModeContext from "../utils/NightModeContext";
+import { useSelector} from "react-redux";
 
 const Header = () => {
   const [loginStatus, setLoginStatus] = useState("Login");
@@ -27,6 +28,23 @@ const Header = () => {
     }
   };
 
+  const total = useSelector((store) => 
+  store.portfolio.holding.reduce((total, h) => total + h.coinTotal, 0)
+);
+
+
+  // useEffect(()=>{
+  //   total();
+  //   }, holdingArr);
+
+  //   const total = () => {
+  //     const total = 0
+  //     holdingArr.map((h) => {
+  //       total += h.coinTotal;
+  //     });
+  //     return total;
+  //   };
+
   return (
     <>
       <div className="flex align-middle justify-between h-[5vh] py-[1vh] dark:bg-black dark:text-white">
@@ -45,7 +63,7 @@ const Header = () => {
         <ul className="list-none flex justify-around items-center px-[2vw] dark:bg-black">
           <li className="dark:bg-black">{status ? "🟢 Online" : "🔴 Offline"}</li>
           <Link to={"/portfolio"}>
-            <li className="px-[2vw] dark:bg-black">Portfolio</li>
+            <li className="px-[2vw] dark:bg-black">Portfolio: ({total})</li>
           </Link>
           <Link to={"/subscription"}>
             <li className="px-[2vw] dark:bg-black">Subscription</li>

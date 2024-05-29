@@ -1,15 +1,19 @@
 import React from 'react'
 import { useState } from 'react';
 import useCoinData from '../utils/useCoinData';
+import { useDispatch, useSelector } from 'react-redux';
+import { addHolding, removeHolding } from '../utils/portfolioSlice';
 
 
 const Portfolio = () => {
     const [qtyValue, setQtyValue] = useState(0);
     const[price, setPrice] = useState(null);
     const [selectedCoin, setSelectedCoin] = useState("");
-    const[pfArr, setPfArr] = useState([]);
 
     const coinData = useCoinData();
+
+    const pfArr = useSelector((store) => store.portfolio.holding);
+    const dispatch = useDispatch();
 
     const setVal = (e) => {
         setQtyValue(e.target.value)
@@ -28,27 +32,23 @@ const Portfolio = () => {
         if(qtyValue > 0 && selectedCoin != ""){
 
             if(qtyValue >= 0){
-                let arr = [{
-                    symbol: selectedCoin ,
-                    mktPrice: price,
-                    holdingQty: qtyValue,
-                    coinTotal: (qtyValue * (price))
-                }
-                ];
-
-                console.log(arr);
-    
-                if( arr[0].coinTotal != 0){
-                    setPfArr([arr , ...pfArr]);
+                dispatch(addHolding({
+                  symbol: selectedCoin ,
+                  mktPrice: price,
+                  holdingQty: qtyValue,
+                  coinTotal: (qtyValue * (price))
+              }))
                     setPrice(null);
                     setSelectedCoin("");
                     setQtyValue(0);
-                }
-
             }
         }else{
             alert("Invalid Request, Please select coin and insert qty");
         }
+    }
+
+    const removeThisHolding = (index) => {
+      dispatch(removeHolding(index))
     }
 
   return coinData == null? <h3>Loading...</h3> : (
@@ -88,15 +88,17 @@ const Portfolio = () => {
       <th className="px-4 py-2 dark:bg-black">Mkt Price</th>
       <th className="px-4 py-2 dark:bg-black">Holding Qty</th>
       <th className="px-4 py-2 dark:bg-black">Total</th>
+      <th className="px-4 py-2 dark:bg-black">Remove</th>
     </tr>
   </thead>
   <tbody className='dark:bg-black dark:text-white'>
     {pfArr.map((pfc, index) => (
-      <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}>
-        <td className="px-4 py-2 text-center dark:bg-black">{pfc[0].symbol}</td>
-        <td className="px-4 py-2 text-center dark:bg-black">${parseFloat(pfc[0].mktPrice).toFixed(2)}</td>
-        <td className="px-4 py-2 text-center dark:bg-black">{pfc[0].holdingQty}</td>
-        <td className="px-4 py-2 text-center dark:bg-black">${parseFloat(pfc[0].coinTotal).toFixed(2)}</td>
+      <tr key={index}>
+        <td className="px-4 py-2 text-center dark:bg-black">{pfc.symbol}</td>
+        <td className="px-4 py-2 text-center dark:bg-black">${parseFloat(pfc.mktPrice).toFixed(2)}</td>
+        <td className="px-4 py-2 text-center dark:bg-black">{pfc.holdingQty}</td>
+        <td className="px-4 py-2 text-center dark:bg-black">${parseFloat(pfc.coinTotal).toFixed(2)}</td>
+        <td className="px-4 py-2 text-center dark:bg-black" onClick={()=> removeThisHolding(index)}>x</td>
       </tr>
     ))}
   </tbody>

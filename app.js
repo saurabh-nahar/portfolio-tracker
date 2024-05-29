@@ -1,5 +1,7 @@
 import React, {lazy, Suspense, useState} from "react";
 import ReactDOM  from "react-dom/client";
+import { Provider } from "react-redux";
+import appStore from "./src/utils/appStore";
 import Header from "./src/components/Header";
 import Footer from "./src/components/Footer";
 import About from "./src/components/About";
@@ -17,10 +19,12 @@ const App = () =>{
     const [switchNightMode, setSwitchNightMode] = useState(false);
     return(
         <div className="dark:bg-black">
+        <Provider store = {appStore}>
         <NightModeContext.Provider value={{ nightMode: switchNightMode, setSwitchNightMode}}>
         <Header />
         <Outlet/>
         </NightModeContext.Provider>
+        </Provider>   
         </div>
     )
 }
