@@ -3,6 +3,7 @@ import ReactDOM  from "react-dom/client";
 import { Provider } from "react-redux";
 import appStore from "./src/utils/appStore";
 import Header from "./src/components/Header";
+import BasicTable from "./src/components/BasicTable";
 import Footer from "./src/components/Footer";
 import About from "./src/components/About";
 import Contact from "./src/components/Contact";
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
         element: <App/>,
         children:[
             {   path: "/",
-                element: <Body/>
+                element: <BasicTable/>
             },
             {   path: "/about",
                 element: <About/>

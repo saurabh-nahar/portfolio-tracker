@@ -4,6 +4,7 @@ import useCoinData from "../utils/useCoinData";
 const Body = ()=> {
 
   const coinData = useCoinData();
+  console.log(coinData);
 
     return coinData === null ? (
       <h1>Rendering</h1>
@@ -54,3 +55,4 @@ const Body = ()=> {
 }
 
 export default Body;
+

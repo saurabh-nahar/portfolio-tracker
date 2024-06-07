@@ -1,2 +1,2 @@
-export const API_LINK = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=25&CMC_PRO_API_KEY="
+export const API_LINK = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=5000&CMC_PRO_API_KEY="
 export const ETHERSCAN_API_LINK = "https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey="
