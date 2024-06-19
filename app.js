@@ -13,6 +13,12 @@ import Portfolio from "./src/components/Portfolio";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import NightModeContext from "./src/utils/NightModeContext";
 import Subscription from "./src/components/Subscription";
+import Feed from "./src/components/Feed";
+import YouTube from "./src/components/YouTube";
+import News from "./src/components/News";
+import TwitterFeed from "./src/components/TwitterFeed";
+import WalletHoldings from "./src/components/WalletHoldings";
+
 
 const Portfolio = lazy(()=> import('./src/components/Portfolio'));
 
@@ -47,9 +53,29 @@ const router = createBrowserRouter([
             {   path: "/subscription",
                 element: <Subscription/>
             },
+            {   path: "/holdings",
+                element: <WalletHoldings/>
+            },
             {   path: "/portfolio",
                 element: <Suspense fallback = {"Loading!!"}><Portfolio/></Suspense>
-            }
+            },
+            {   path: "/feed",
+                element: <Feed/>,
+                children:[
+                    {
+                        path: "/feed/youtube",
+                        element: <YouTube/>
+                    },
+                    {
+                        path: "/feed/news",
+                        element: <News/>
+                    },
+                    {
+                        path: "/feed/x",
+                        element: <TwitterFeed/>
+                    }
+                ]
+            },
         ],
         errorElement: <Error/> 
     }

@@ -10,5 +10,5 @@ module.exports = {
       'Green Screen': ['Green Screen', 'sans-serif'],
     }
   },
-  plugins: [],
+  plugins: [ ],
 };

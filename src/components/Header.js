@@ -68,6 +68,9 @@ const Header = () => {
           <Link to={"/subscription"}>
             <li className="px-[2vw] dark:bg-black">Subscription</li>
           </Link>
+          <Link to={"/feed"}>
+            <li className="px-[2vw] dark:bg-black">Feed</li>
+          </Link>
           <Link to={"/about"}>
             <li className="px-[2vw] dark:bg-black">About</li>
           </Link>

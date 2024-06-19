@@ -7,6 +7,11 @@ const BasicTable = () => {
 
   const data = apiResponse?.data || [];
 
+  const formatter = new Intl.NumberFormat('en-us',{
+    style: 'currency',
+    currency: 'USD'
+  })
+
   /** @type import('@tanstack/react-table').ColumnDef<any>[] */
   const columns = useMemo(
     () => [
@@ -27,7 +32,7 @@ const BasicTable = () => {
         accessorKey: 'quote.USD.price',
         cell: ({ getValue }) => {
             const price = getValue();
-            return price.toFixed(2);
+            return formatter.format(price);
           },
       },
       {
@@ -66,6 +71,22 @@ const BasicTable = () => {
             return `${emoji} ${percentChange.toFixed(2)}`;
           },
       },
+      {
+        header: '24H Volume',
+        accessorKey: 'quote.USD.volume_24h',
+        cell: ({ getValue }) => {
+            const change = getValue();
+            return `${formatter.format(change)}`;
+          },
+      },
+      {
+        header: 'Marketcap',
+        accessorKey: 'quote.USD.market_cap',
+        cell: ({ getValue }) => {
+            const value = getValue();
+            return `${formatter.format(value)}`;
+          },
+      },
     ],
     []
   );
@@ -90,6 +111,11 @@ const BasicTable = () => {
         const value = row.getValue(columnId);
         return String(value).toLowerCase().includes(String(filterValue).toLowerCase());
       },
+      initialState: {
+        pagination: {
+          pageSize: 100,
+        },
+      },
   });
 
   if (!apiResponse) {
@@ -97,8 +123,11 @@ const BasicTable = () => {
   }
 
   return (
-    <div className='py-[25vh] dark:bg-black px-32'>
-        <input placeholder='Search' type='text' value={filtering} onChange={e => setFiltering(e.target.value)} className="border border-black"/>
+    <div className='py-[5vh] dark:bg-black px-[2vw]'>
+      <div className='flex justify-center  dark:bg-black'>
+      <input placeholder='🔍 Search' type='text' value={filtering} onChange={e => setFiltering(e.target.value)} className="border border-black dark:bg-black dark:border-white rounded-md p-2 m-2 w-80"/>
+      </div>
+      <div className='flex justify-center  dark:bg-black'>
     <table className='table-fixed dark:bg-black'>
       <thead>
         {table.getHeaderGroups().map((headerGroup) => (
@@ -126,7 +155,8 @@ const BasicTable = () => {
         ))}
       </tbody>
     </table>
-    <div className='dark:bg-black'>
+    </div>
+    <div className='dark:bg-black flex justify-center'>
         <button onClick={() => table.setPageIndex(0)} className='text-3xl mx-2'>˱˱</button>
         <button disabled={!table.getCanPreviousPage()} onClick={() => table.previousPage() }className='text-3xl mx-2'>˱</button>
         <button disabled={!table.getCanNextPage()} onClick={() => table.nextPage()}className='text-3xl mx-2'>˲</button>
