@@ -51,6 +51,10 @@ const Portfolio = () => {
       dispatch(removeHolding(index))
     }
 
+    const pfTotal = useSelector((store) => 
+    store.portfolio.holding.reduce((total, h) => total + h.coinTotal, 0)
+  );
+
   return coinData == null? <h3>Loading...</h3> : (
     <div className='dark:bg-black'>
     <div className="flex justify-center items-center dark:bg-black dark:text-white">
@@ -75,6 +79,9 @@ const Portfolio = () => {
   Add
 </button>
 
+</div>
+<div className="dark:bg-black flex justify-center m-8">
+  <h2 className="dark:bg-black text-2xl">Portfolio Value: ${pfTotal.toFixed(2)}</h2>
 </div>
 <div className='dark:bg-black'>
     <br/>
@@ -103,7 +110,6 @@ const Portfolio = () => {
     ))}
   </tbody>
 </table>
-
     </div>
   )
 }
